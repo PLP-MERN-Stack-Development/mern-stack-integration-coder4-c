@@ -42,48 +42,76 @@ api.interceptors.response.use(
 export const postService = {
   // Get all posts with optional pagination and filters
   getAllPosts: async (page = 1, limit = 10, category = null) => {
-    let url = `/posts?page=${page}&limit=${limit}`;
-    if (category) {
-      url += `&category=${category}`;
+    try {
+      let url = `/posts?page=${page}&limit=${limit}`;
+      if (category) {
+        url += `&category=${category}`;
+      }
+      const response = await api.get(url);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to fetch posts');
     }
-    const response = await api.get(url);
-    return response.data;
   },
 
   // Get a single post by ID or slug
   getPost: async (idOrSlug) => {
-    const response = await api.get(`/posts/${idOrSlug}`);
-    return response.data;
+    try {
+      const response = await api.get(`/posts/${idOrSlug}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to fetch post');
+    }
   },
 
   // Create a new post
   createPost: async (postData) => {
-    const response = await api.post('/posts', postData);
-    return response.data;
+    try {
+      const response = await api.post('/posts', postData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to create post');
+    }
   },
 
   // Update an existing post
   updatePost: async (id, postData) => {
-    const response = await api.put(`/posts/${id}`, postData);
-    return response.data;
+    try {
+      const response = await api.put(`/posts/${id}`, postData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to update post');
+    }
   },
 
   // Delete a post
   deletePost: async (id) => {
-    const response = await api.delete(`/posts/${id}`);
-    return response.data;
+    try {
+      const response = await api.delete(`/posts/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to delete post');
+    }
   },
 
   // Add a comment to a post
   addComment: async (postId, commentData) => {
-    const response = await api.post(`/posts/${postId}/comments`, commentData);
-    return response.data;
+    try {
+      const response = await api.post(`/posts/${postId}/comments`, commentData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to add comment');
+    }
   },
 
   // Search posts
   searchPosts: async (query) => {
-    const response = await api.get(`/posts/search?q=${query}`);
-    return response.data;
+    try {
+      const response = await api.get(`/posts/search?q=${query}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to search posts');
+    }
   },
 };
 
@@ -91,14 +119,42 @@ export const postService = {
 export const categoryService = {
   // Get all categories
   getAllCategories: async () => {
-    const response = await api.get('/categories');
-    return response.data;
+    try {
+      const response = await api.get('/categories');
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to fetch categories');
+    }
   },
 
   // Create a new category
   createCategory: async (categoryData) => {
-    const response = await api.post('/categories', categoryData);
-    return response.data;
+    try {
+      const response = await api.post('/categories', categoryData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to create category');
+    }
+  },
+
+  // Update a category
+  updateCategory: async (id, categoryData) => {
+    try {
+      const response = await api.put(`/categories/${id}`, categoryData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to update category');
+    }
+  },
+
+  // Delete a category
+  deleteCategory: async (id) => {
+    try {
+      const response = await api.delete(`/categories/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.error || 'Failed to delete category');
+    }
   },
 };
 
